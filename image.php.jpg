@@ -1,0 +1,62 @@
+<?php
+
+/*
+	A simple logging script that will record statistics
+	
+	10:04 PM Monday, February 03, 2014
+	
+*/
+
+
+// basically just have it record the data to a file
+
+
+// *** TODO:
+// * nice directory structure for the log files
+
+
+
+// setup
+define('LOG_DIR', './logs');
+
+
+$filename = date('Y-m-d').'.log';
+$log_file = LOG_DIR.DIRECTORY_SEPARATOR.$filename;
+
+$message_date = date('M d Y', $_SERVER['REQUEST_TIME']);
+$message_time = date('g:i:s A', $_SERVER['REQUEST_TIME']);
+
+
+// check if the logfile for today already exists, if not, create it.
+
+
+$message = <<<EOT
+[$message_date $message_time] {$_SERVER['REMOTE_ADDR']} || {$_SERVER['HTTP_REFERER']} || {$_SERVER['HTTP_USER_AGENT']}
+
+EOT;
+
+//var_dump($message);
+
+
+if (!$handle = fopen($log_file, "a")) {
+	//echo "Cannot open file ($filename)";
+	exit;
+	
+}
+else {
+
+	if (fwrite($handle, $message) === FALSE) {
+		//echo "Cannot write to file ($filename)";
+		exit;
+	}
+
+	fclose($handle);
+
+}
+
+header('Content-type:image/jpeg');
+//header('Content-type:text/plain');
+
+//var_dump($_SERVER);
+
+?>
